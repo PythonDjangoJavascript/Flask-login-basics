@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, Email, EqualTo
 
-from models import User
+from basic_login.models import User
 
 
 # Flask Forms
@@ -17,7 +17,7 @@ class RegistrationForm(FlaskForm):
         "Enter Your Password",
         validators=[
             DataRequired(),
-            EqualTo('password_confirm', message="Password Must Mathc"),
+            EqualTo('password_confirm', message="Password Must match"),
         ]
     )
     password_confirm = PasswordField(
@@ -35,7 +35,7 @@ class RegistrationForm(FlaskForm):
 
     def validate_username(self, field):
         """Check username already exists in the database"""
-        if User.query.filter_by(username=field.dalta).first():
+        if User.query.filter_by(username=field.data).first():
             # User username already exists
             raise ValidationError(
                 "User name already taken, Please try different one!"

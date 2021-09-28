@@ -19,7 +19,7 @@ def welcome():
     return render_template('welcome_user.html')
 
 
-@app.route('logout/')
+@app.route('/logout')
 @login_required
 def logout():
     """Log out authenticated user"""
@@ -28,7 +28,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('login', method=(['GET', 'POST']))
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     """Renders login form and login user"""
 
@@ -41,13 +41,13 @@ def login():
         if user is not None and user.check_password(form.password.data):
             """password is corrent and user exists"""
 
-            login(user)
+            login_user(user)
             flash("Successfully logged in")
 
             # If user forced to login page for tryting to access other page
             next = request.args.get('next')
 
-            if next in None or not next[0] == '/':
+            if next is None or not next[0] == '/':
                 next = url_for('welcome')
             return redirect(next)
 
@@ -55,13 +55,13 @@ def login():
     return render_template('login.html', form=form)
 
 
-@app.route('/register', method=(['GET', 'POST']))
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     """Render and Register new user"""
 
     form = RegistrationForm()
 
-    if form.validate_on_submit:
+    if form.validate_on_submit():
         """When user submit a valid registration form"""
 
         user = User(

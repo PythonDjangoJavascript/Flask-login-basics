@@ -8,7 +8,7 @@ from flask_login import LoginManager
 login_manager = LoginManager()
 
 # Create main App ----->
-app = Flask('__name__')
+app = Flask(__name__)
 
 # Creating secreat key for form cerf_token verification ----->
 app.config['SECRET_KEY'] = 'MySuperSecretKey'

@@ -12,10 +12,23 @@
   </head>
   <body>
     <nav class="navbar navbar-extend-lg navbar-light bg-light">
-        <a href="{{url_for('index')}}" class="navbar-brand">Home</a>
-        <a href="{{url_for('all_users')}}" class="navbar-brand">All Users</a>
-        <a href="{{url_for('signup')}}" class="navbar-brand">Signup</a>
-        <a href="{{url_for('thank_you')}}" class="navbar-brand">Thank You</a>
+        <ul class="nav">
+            <li class="nav-link">
+                <a href="{{url_for('index')}}" class="navbar-brand">Home</a>
+            </li>
+            {% if current_user.is_authenticated %}
+            <li class="nav-link">
+                <a href="{{url_for('logout')}}" class="navbar-brand">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-link">
+                <a href="{{url_for('login')}}" class="navbar-brand">Login</a>
+            </li>
+            <li class="nav-link">
+                <a href="{{url_for('register')}}" class="navbar-brand">Register</a>
+            </li>
+            {% endif %}
+        </ul>
     </nav>
     {% block content %}
         <!--Body Content goes here-->
